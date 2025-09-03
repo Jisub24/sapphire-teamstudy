@@ -1,4 +1,47 @@
 /* kream.css 맨 위에 */
 h1 {
-  color: aqua;
+  color: blue;
+}
+
+.sell-container {
+  background: #ffc;
+  width: 80rem;
+  height: 31.75rem;
+
+  .title-box {
+    background: lime;
+    width: 8.625rem;
+    height: 3.5rem;
+  }
+
+  .release-items {
+    background: paleturquoise;
+    width: 100%;
+    height: calc(100% - 5.25rem);
+    margin-block-start: 1.75rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+}
+
+.title-box .title-english {
+  width: 100%;
+  height: 1.875rem;
+  background: yellow;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.title-box .title-korean {
+  width: 3.75rem;
+  height: 1.625rem;
+  background: floralwhite;
+  font-size: 14px;
+}
+
+.release-items > div {
+  background: lightpink;
+  width: 15rem;
+  height: 26.5rem;
 }
