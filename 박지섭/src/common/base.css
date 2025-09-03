@@ -1,0 +1,10 @@
+/* 기본 스타일 */
+body {
+  font-family: 'SUIT Variable', sans-serif;
+}
+
+/* 나만의 스타일 지정(하이퍼 링크 스타일 바꾸기) */
+a {
+  text-decoration: none;
+  color: inherit;
+}
