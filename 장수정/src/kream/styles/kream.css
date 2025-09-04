@@ -1,3 +1,180 @@
-body {
-     margin: 20px;
+/* ===== 리셋 ===== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+/* figure 기본 마진 제거(상단 라인 어긋남 방지) */
+figure.item { margin: 0; }
+
+/* ===== 전체 래퍼(1280×508 고정) ===== */
+.total {
+  width: 1280px;
+  height: 508px;
+  margin: 0 auto;
+  background: #fff;
+  overflow: hidden;
+  padding: 6px 0 6px;                  /* 제목 위 여백 타이트 */
+  display: grid;
+  grid-template-rows: 28px 16px 424px; /* [h3][p][리스트] */
+  row-gap: 6px;
+}
+
+/* 제목/부제: 태그 그대로 스타일 (HTML 수정 없음) */
+.total > h3 {
+  margin: 0;
+  font-size: 21px;
+  line-height: 28px;
+  font-weight: 800;
+  color: #111827;
+}
+.total > p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 16px;
+  color: #303033;
+}
+
+/* ===== 리스트: 5열 고정 + 간격 20px =====
+   240*5 + 20*4 = 1280 → 가로 스크롤 X */
+.product-list {
+  list-style: none;
+  margin: 0; padding: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 240px);
+  column-gap: 20px;
+  row-gap: 0;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 한 줄 고정 노출(6번째 이후 숨김) — 필요 없으면 삭제 가능 */
+.product-list > li:nth-child(n+6) { display: none; }
+
+/* ===== 카드(실물 카드 없음, 240×424 고정) ===== */
+.product-list > li {
+  width: 240px;
+  height: 424px;
+  min-width: 240px; max-width: 240px;
+  padding: 0; border: 0; background: transparent;
+  display: flex; flex-direction: column;
+}
+
+/* ===== 이미지 240×240(카드 상단과 정확히 같은 Y) ===== */
+.img-wrap {
+  position: relative;                /* 북마크 기준점 */
+  width: 100%;                       /* = 240px */
+  height: 240px;
+  flex: 0 0 240px;                   /* 줄거나 늘지 않음 */
+  margin: 0; padding: 0; border: 0;
+  overflow: hidden;
+  line-height: 0;                    /* 이미지 인라인 공백 제거 */
+  background: transparent;
+}
+.img-wrap img {
+  width: 100%; height: 100%;
+  display: block;                    /* 베이스라인 틈 제거 */
+  object-fit: cover;                 /* 여백 0로 꽉 채움(크롭 허용) */
+  object-position: center;
+}
+
+/* ===== 북마크: 우하단, active 시 색 변경 ===== */
+.img-wrap .bookmark {
+  position: absolute;
+  right: 10px; bottom: 10px;
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  padding: 0;
+  border: 0;
+  background: none;                  
+  border-radius: 0;
+  color: #303033;                    /* 기본 아이콘 색 */
+  cursor: pointer;
+  z-index: 2;
+  transition: color .2s ease;
+}
+.img-wrap .bookmark.active { color: #22c55e; }   /* 클릭 후 색만 변경 */
+.img-wrap .bookmark svg path { fill: currentColor !important; }
+
+/* ===== 텍스트 블록(남은 184px) =====
+   할인율(.discount) + 가격(.price)을 한 줄로 정렬하기 위해 grid 사용 */
+.text {
+  min-height: 184px;                /* 424 - 240 */
+  padding: 12px;
+  display: grid;
+  grid-template-columns: auto auto;               /* [할인][가격] 두 칸 */
+  grid-template-rows: auto auto auto 1fr auto auto; /* [브랜드][설명][혜택][여유][할인+가격][라벨] */
+  min-width: 0;                     /* 긴 텍스트 폭 밀림 방지 */
+}
+
+/* 위쪽 정보들은 두 컬럼을 모두 차지 */
+.text .brand,
+.text .desc,
+.text .benefits { grid-column: 1 / -1; }
+
+/* 브랜드 1줄 말줄임 */
+.text .brand {
+  font-weight: 700;
+  font-size: 18px;
+  color: #303030;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* desc: 벤더 없이 ‘최대 2줄’(전통식) — 말줄임표는 없음 */
+.text .desc {
+  font-size: 12px;
+  line-height: 17px;                /* 고정 line-height 권장 */
+  color: #55606F;
+
+  display: block;                   
+  max-height: 34px;                 /* 17px × 2줄 */
+  overflow: hidden;                 /* 넘치는 텍스트는 숨김 */
+
+  word-break: keep-all;             /* 한국어 어절 기준 줄바꿈 */
+  overflow-wrap: anywhere;          /* 긴 영문 단어 줄바꿈 허용 */
+}
+
+/* 혜택 배지 줄(필요 최소) */
+.benefits { display: flex; align-items: center; gap: 6px; }
+.point, .fast, .sold-out {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px; font-weight: 600;
+  background: #fff; border: 1px solid; white-space: nowrap;
+}
+.point    { color:#303033; border-color:#303033; }
+.fast     { color:#58DC76; border-color:#58DC76; }
+.fast img { width:14px; height:14px; object-fit: contain; }
+.sold-out { color:#B02C20; border-color:#B02C20; }
+
+/* 할인율 + 가격: 같은 행(5번째)에 나란히 */
+.text .discount {
+  grid-row: 4; grid-column: 1;
+  align-self: baseline; justify-self: start;
+  color: #B02C20;
+  font-weight: 700;
+  font-size: 16px;
+  background: none; border: 0; padding: 0;
+}
+.text .price {
+  grid-row: 4; grid-column: 2;
+  align-self: baseline; justify-self: start;
+  margin: 0;                         /* auto 제거: 한 줄 정렬 위해 */
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #111827;
+}
+
+/* ‘구매가’ 라벨: 마지막 행 */
+.text .buy-label {
+  grid-row: 5; grid-column: 1 / -1;
+  margin-top: 2px;
+  display: inline-block;
+  font-size: 11px;
+  color: #7A7F87;
 }
