@@ -87,8 +87,6 @@ button {
   gap: 32px;
   margin: 0;
   padding: 12px 24px;
-  border-top: 1px solid #eee;  /* 위쪽 얇은 검정 줄 */
-  border-bottom: 1px solid #eee; /* 아래쪽 얇은 검정 줄 */
 }
 
 .main_menu li {
