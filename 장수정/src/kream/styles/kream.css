@@ -2,7 +2,129 @@
 *,
 *::before,
 *::after { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
+html, body { margin: 20; padding: 0; }
+
+/* 리스트 점 없애기 */
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* button 초기화 + 기본 스타일 */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 공통 */
+.top_button {
+  width: 100%;
+  border-bottom: 1px solid #eee;
+}
+
+/* 1. Top Menu (우측 상단 유틸) */
+.top_menu {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  font-size: 12px;
+  margin: 8px 16px;
+}
+
+.top_menu button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+}
+
+/* 2. Middle Menu (로고 + HOME/STYLE/SHOP + 검색) */
+.middle_menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 로고 왼쪽 / 메뉴 오른쪽 */
+  padding: 12px 24px;
+}
+
+.logo img {
+  height: 18px; /* 로고 크기 조정 */
+}
+
+.nav_menu {
+  display: flex;
+  align-items: center;
+  gap: 32px; /* 메뉴 간격 */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav_menu button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.nav_menu .btn_search img {
+  width: 18px;
+  height: 18px;
+}
+
+
+/* 3. Main Menu (추천/랭킹/남성/여성/발견) */
+/* 메인 메뉴 */
+.main_menu {
+  display: flex;
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  gap: 32px;
+  margin: 0;
+  padding: 12px 24px;
+  border-top: 1px solid #eee;  /* 위쪽 얇은 검정 줄 */
+  border-bottom: 1px solid #eee; /* 아래쪽 얇은 검정 줄 */
+}
+
+.main_menu li {
+  list-style: none;
+}
+
+.main_menu button {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  padding: 4px 8px;
+}
+
+/* Hover 또는 활성화 상태 */
+.main_menu button:hover,
+.main_menu button.active {
+  border-bottom: 2px solid black;
+}
+
+/* Hover 또는 활성화 상태일 때 빨간 점 */
+.main_menu button:hover::after,
+.main_menu button.active::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 6px;
+  height: 6px;
+  background: red;
+  border-radius: 50%;
+}
+
 
 /* figure 기본 마진 제거(상단 라인 어긋남 방지) */
 figure.item { margin: 0; }
