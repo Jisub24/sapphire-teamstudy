@@ -1,0 +1,100 @@
+body {
+  margin: 40px;
+}
+
+/* ------------------------------
+   컨테이너 기본 설정 (모바일 퍼스트)
+   ------------------------------ */
+.container {
+  display: grid;
+
+  /* 모바일: 좌우 여백 20px, 가운데 콘텐츠 1칸 */
+  grid-template-columns:
+    [full-start] 20px
+    [content-start] 1fr
+    [content-end] 20px
+    [full-end];
+
+  grid-auto-rows: auto; /* 높이는 내용에 맞춰 자동 */
+  gap: 16px;            /* 아이템 간격 */
+}
+
+/* 모든 자식은 기본적으로 content 영역에 들어감 */
+.container > * {
+  grid-column: content-start / content-end;
+}
+
+/* main은 단순 wrapper이므로 contents 처리 → 내부 아이템들이 grid에 직접 참여 */
+.main {
+  display: contents;
+}
+
+/* ------------------------------
+   공통 UI 스타일
+   ------------------------------ */
+.header,
+.footer {
+  background: #999;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.sidebar {
+  background: #333;
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.content {
+  background: #444;
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.sidebar2 {
+  background: #ccc;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* ------------------------------
+   모바일 레이아웃 (<960px)
+   → 사이드바/콘텐츠/사이드바2는 세로로 쌓임
+   ------------------------------ */
+.sidebar,
+.content,
+.sidebar2 {
+  grid-column: content-start / content-end; /* 한 줄 전체 차지 */
+}
+
+/* ------------------------------
+   데스크탑 레이아웃 (>=960px)
+   → 3열 구조로 배치
+   ------------------------------ */
+@media (min-width: 960px) {
+  .container {
+    grid-template-columns:
+      [full-start] 1fr
+      [content-start] repeat(12, minmax(62px, 1fr))
+      [content-end] 1fr
+      [full-end];
+  }
+
+  .sidebar {
+    grid-column: content-start / span 2; /* 좌측 2칸 */
+  }
+
+  .content {
+    grid-column: span 8; /* 가운데 8칸 */
+  }
+
+  .sidebar2 {
+    grid-column: span 2; /* 우측 2칸 */
+  }
+
+  .footer {
+    grid-column: content-start / content-end; /* 다시 전체 폭 */
+  }
+}
